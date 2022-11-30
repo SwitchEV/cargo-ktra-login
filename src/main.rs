@@ -11,18 +11,18 @@ use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Parser)]
-#[command(name = "cargo")]
-#[command(bin_name = "cargo")]
+#[clap(name = "cargo")]
+#[clap(bin_name = "cargo")]
 pub enum Command {
-    #[command(name = "ktra-login")]
-    #[command(about, author, version)]
+    #[clap(name = "ktra-login")]
+    #[clap(about, author, version)]
     KtraLogin(KtraLoginOpt),
 }
 
 /// Automated login for private ktra registries
 #[derive(Debug, Clone, clap::Args)]
 pub struct KtraLoginOpt {
-    #[command(flatten)]
+    #[clap(flatten)]
     manifest: Manifest,
     /// The user account to log in with
     username: String,
