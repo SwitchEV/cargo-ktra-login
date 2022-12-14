@@ -1,7 +1,14 @@
 [package]
 name = "cargo-ktra-login"
 version = "0.1.0"
+authors = ["roastveg <louis@switch-ev.com"]
 edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/SwitchEV/cargo-ktra-login"
+readme = "README.md"
+keywords = ["subcommand", "cargo", "ktra", "registry"]
+description = "Log in to private ktra registries using cargo"
+documentation = "https://docs.rs/cargo-ktra-login"
 
 [dependencies]
 anyhow = "1.0"
