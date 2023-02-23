@@ -65,8 +65,8 @@ fn main() -> Result<(), anyhow::Error> {
     let source_id = SourceId::alt_registry(config, &registry)?;
     let lock = config.acquire_package_cache_lock()?;
     let mut registry_source = RegistrySource::remote(source_id, &HashSet::new(), config)?;
-    let reg_config = registry_source.config();
     registry_source.block_until_ready()?;
+    let reg_config = registry_source.config();
     let api = reg_config
         .expect("Failed to get the registry source")?
         .unwrap()
