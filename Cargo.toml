@@ -1,6 +1,6 @@
 [package]
 name = "cargo-ktra-login"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["roastveg <louis@switch-ev.com"]
 edition = "2021"
 license = "Apache-2.0"
