@@ -14,6 +14,6 @@ documentation = "https://docs.rs/cargo-ktra-login"
 anyhow = "1.0"
 clap = { version = "3.2", features = ["derive"] }
 clap-cargo = "0.9"
-cargo = "0.65"
+cargo = "0.67"
 reqwest = { version = "0.11", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
