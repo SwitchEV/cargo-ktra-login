@@ -1,9 +1,9 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, task::Poll};
 
 use cargo::{
     core::{source::SourceId, Source, Workspace},
     sources::registry::RegistrySource,
-    util::{network::PollExt, Config},
+    util::Config,
 };
 use clap::Parser;
 use clap_cargo::Manifest;
@@ -65,13 +65,16 @@ fn main() -> Result<(), anyhow::Error> {
     let source_id = SourceId::alt_registry(config, &registry)?;
     let lock = config.acquire_package_cache_lock()?;
     let mut registry_source = RegistrySource::remote(source_id, &HashSet::new(), config)?;
+    registry_source.invalidate_cache();
     registry_source.block_until_ready()?;
-    let reg_config = registry_source.config();
-    let api = reg_config
-        .expect("Failed to get the registry source")?
-        .unwrap()
-        .api
-        .unwrap();
+    let api = loop {
+        match registry_source.config()? {
+            Poll::Pending => registry_source.block_until_ready()?,
+            Poll::Ready(cfg) => break cfg,
+        }
+    }
+    .and_then(|cfg| cfg.api)
+    .ok_or(anyhow::anyhow!("invalid registry"))?;
     drop(lock);
 
     let request = Client::new();
