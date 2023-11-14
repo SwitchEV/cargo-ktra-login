@@ -9,6 +9,7 @@ readme = "README.md"
 keywords = ["subcommand", "cargo", "ktra", "registry"]
 description = "Log in to private ktra registries using cargo"
 documentation = "https://docs.rs/cargo-ktra-login"
+rust-version = "1.68.2"
 
 [dependencies]
 anyhow = "1.0"
