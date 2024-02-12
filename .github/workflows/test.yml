@@ -1,0 +1,23 @@
+name: Check and lint cargo-ktra-login
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: dtolnay/rust-toolchain@1.74.0
+      with:
+          components: clippy, rustfmt
+
+    - name: Verify that code is formatted correctly.
+      run: cargo fmt --verbose --check
+
+    - name: Verify that code is linted correctly.
+      run: cargo clippy -- --deny=warnings
