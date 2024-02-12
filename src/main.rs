@@ -1,14 +1,30 @@
 use std::{collections::HashSet, task::Poll};
 
 use cargo::{
-    core::{source::SourceId, Source, Workspace},
-    sources::registry::RegistrySource,
+    core::{SourceId, Workspace},
+    ops::RegistryOrIndex,
+    sources::{registry::RegistrySource, source::Source},
     util::Config,
 };
-use clap::Parser;
+use cargo_credential::Secret;
+use clap::{
+    builder::{styling::AnsiColor, Styles},
+    Parser,
+};
 use clap_cargo::Manifest;
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
+
+fn styles() -> Styles {
+    Styles::plain()
+        .header(AnsiColor::Yellow.on_default())
+        .error(AnsiColor::Red.on_default().bold())
+        .usage(AnsiColor::Yellow.on_default())
+        .literal(AnsiColor::Green.on_default())
+        .placeholder(AnsiColor::Green.on_default())
+        .valid(AnsiColor::Green.on_default())
+        .invalid(AnsiColor::Yellow.on_default())
+}
 
 #[derive(Debug, Parser)]
 #[clap(name = "cargo")]
@@ -19,7 +35,7 @@ pub enum Command {
 
 /// Automated login for private ktra registries
 #[derive(Debug, Clone, clap::Args)]
-#[clap(author, about, long_about = None, version)]
+#[clap(author, about, long_about = None, version, styles = styles())]
 pub struct KtraLoginOpt {
     #[clap(flatten)]
     manifest: Manifest,
@@ -104,8 +120,9 @@ fn main() -> Result<(), anyhow::Error> {
             }
             KtraResponse::Token(token) => Ok(cargo::ops::registry_login(
                 config,
-                Some(token),
-                Some(registry),
+                Some(Secret::from(token.as_ref())),
+                Some(&RegistryOrIndex::Registry(registry)),
+                &[],
             )?),
         }
     }

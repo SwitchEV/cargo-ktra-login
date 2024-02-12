@@ -15,20 +15,18 @@ Given a username and a password, this Cargo subcommand will perform the followin
 
 cargo-ktra-login has the following command signature:
 ```
-cargo-ktra-login 0.1.0
-Automated login for private ktra registries
+Log in to private ktra registries using cargo
 
-USAGE:
-    cargo ktra-login [OPTIONS] <USERNAME> <PASSWORD>
+Usage: cargo ktra-login [OPTIONS] <USERNAME> <PASSWORD>
 
-ARGS:
-    <USERNAME>    The user account to log in with
-    <PASSWORD>    The account password to log in with
+Arguments:
+  <USERNAME>  The user account to log in with
+  <PASSWORD>  The account password to log in with
 
-OPTIONS:
-        --dry-run                 Check that the manifest is valid and that the remote registry
-                                  exists, but don't generate a token
-    -h, --help                    Print help information
-        --manifest-path <PATH>    Path to Cargo.toml
-    -V, --version                 Print version information
+Options:
+      --manifest-path <PATH>  Path to Cargo.toml
+      --dry-run               Check that the manifest is valid and that the remote registry exists, but don't
+                              generate a token
+  -h, --help                  Print help
+  -V, --version               Print version
 ```

@@ -1,6 +1,6 @@
 [package]
 name = "cargo-ktra-login"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["roastveg <louis@switch-ev.com"]
 edition = "2021"
 license = "Apache-2.0"
@@ -9,12 +9,13 @@ readme = "README.md"
 keywords = ["subcommand", "cargo", "ktra", "registry"]
 description = "Log in to private ktra registries using cargo"
 documentation = "https://docs.rs/cargo-ktra-login"
-rust-version = "1.68.2"
+rust-version = "1.74.0"
 
 [dependencies]
 anyhow = "1.0"
-clap = { version = "3.2", features = ["derive"] }
-clap-cargo = "0.9"
-cargo = "0.67"
+clap = { version = "4.5", features = ["derive"] }
+clap-cargo = "0.14"
+cargo = "0.75"
+cargo-credential = "0.4"
 reqwest = { version = "0.11", features = ["blocking", "json"] }
 serde = { version = "1.0", features = ["derive"] }
