@@ -49,11 +49,6 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Configure access to retrieve dependencies from private registry
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.CARGO_REGISTRY_PRIVATE_KEY }}
-
     - name: Download `binstall`.
       uses: cargo-bins/cargo-binstall@v1.6.0 
 
