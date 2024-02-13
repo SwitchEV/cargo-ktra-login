@@ -45,8 +45,10 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Compile binary
+    - name: Fetch Rust toolchain
       uses: dtolnay/rust-toolchain@1.74.0
+
+    - name: Compile release binary
       run: cargo build --release
 
     - name: Collect binary in artifacts/ folder
