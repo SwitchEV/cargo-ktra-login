@@ -19,7 +19,7 @@ jobs:
       run: |
         pkg_version=$(cargo pkgid | cut --delimiter=# --field=2 | cut --delimiter=@ --field=2)
 
-        if [ "$pkg_version" != "${{ github.ref_name }}" ]; then
+        if [ "v$pkg_version" != "${{ github.ref_name }}" ]; then
           echo "Version $pkg_version, defined in Cargo.toml, does not match TAG ${{ github.ref_name }} of this release";
           exit 3;
         fi
