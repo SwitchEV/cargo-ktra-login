@@ -49,7 +49,7 @@ jobs:
       uses: dtolnay/rust-toolchain@1.74.0
 
     - name: Compile release binary
-      run: cargo build --release
+      run: cargo build --release --target=${{ matrix.target }}
 
     - name: Collect binary in artifacts/ folder
       shell: bash
