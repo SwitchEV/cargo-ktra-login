@@ -3,7 +3,7 @@ name: Build and upload artifacts
 on:
   push:
     tags:
-      - "[0-9]+.[0-9]+.[0-9]+*"
+      - "v[0-9]+.[0-9]+.[0-9]+*"
 
 jobs:
   # Validate that the git tag matches the version string in Cargo.toml.
@@ -44,7 +44,7 @@ jobs:
           # Windows hosts
           - target: x86_64-pc-windows-msvc
             os: windows-latest
-    runs-on: ${{ matrix.os }}.
+    runs-on: ${{ matrix.os }}
     steps:
     - name: Checkout source code
       uses: actions/checkout@v4
