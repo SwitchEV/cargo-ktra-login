@@ -34,10 +34,6 @@ jobs:
           # Linux hosts
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
-          - target: x86_64-unknown-linux-musl
-            os: ubuntu-latest
-          - target: aarch64-unknown-linux-gnu
-            os: ubuntu-latest
           # MacOS hosts
           - target: x86_64-apple-darwin
             os: macos-latest
@@ -49,19 +45,9 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v4
 
-    - name: Download `binstall`.
-      uses: cargo-bins/cargo-binstall@v1.6.0 
-
-    - name: Install `cross` and compile artifact
-      run: |
-        cargo binstall \
-          --version=0.2.5 \
-          --no-confirm \
-          cross
-
-        cross build \
-          --target ${{ matrix.target }} \
-          --profile release
+    - name: Compile binary
+      uses: dtolnay/rust-toolchain@1.74.0
+      run: cargo build --release
 
     - name: Collect binary in artifacts/ folder
       shell: bash
