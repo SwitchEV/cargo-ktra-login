@@ -52,7 +52,7 @@ jobs:
         shell: bash
         run: |
           cp \
-            "-v"
+            -v \
             "./target/${{ matrix.target }}/release/cargo-ktra-login"  \
             "cargo-ktra-login-${{ github.ref_name }}-${{ matrix.target }}"
 
