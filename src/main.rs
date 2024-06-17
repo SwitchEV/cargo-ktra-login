@@ -27,15 +27,14 @@ fn styles() -> Styles {
 }
 
 #[derive(Debug, Parser)]
-#[clap(name = "cargo")]
-#[clap(bin_name = "cargo")]
+#[clap(name = "cargo", bin_name = "cargo", styles = styles())]
 pub enum Command {
     KtraLogin(KtraLoginOpt),
 }
 
 /// Automated login for private ktra registries
 #[derive(Debug, Clone, clap::Args)]
-#[clap(author, about, long_about = None, version, styles = styles())]
+#[clap(author, about, long_about = None, version)]
 pub struct KtraLoginOpt {
     #[clap(flatten)]
     manifest: Manifest,
@@ -46,6 +45,9 @@ pub struct KtraLoginOpt {
     /// Check that the manifest is valid and that the remote registry exists, but don't generate a token
     #[clap(long)]
     dry_run: bool,
+    /// The name of the registry to log in to
+    #[clap(long)]
+    registry: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -75,9 +77,12 @@ fn main() -> Result<(), anyhow::Error> {
     let config = Config::default()?;
     let ws = Workspace::new(&manifest, &config)?;
     let config = ws.config();
-    let registry = config.default_registry()?.ok_or(anyhow::anyhow!(
-        "No default registry is set for this package"
-    ))?;
+    let registry = login
+        .registry
+        .or(config.default_registry()?)
+        .ok_or(anyhow::anyhow!(
+            "No default registry is set for this package"
+        ))?;
     let source_id = SourceId::alt_registry(config, &registry)?;
     let lock = config.acquire_package_cache_lock()?;
     let mut registry_source = RegistrySource::remote(source_id, &HashSet::new(), config)?;
