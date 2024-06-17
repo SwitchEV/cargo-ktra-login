@@ -25,8 +25,8 @@ Arguments:
 
 Options:
       --manifest-path <PATH>  Path to Cargo.toml
-      --dry-run               Check that the manifest is valid and that the remote registry exists, but don't
-                              generate a token
+      --dry-run               Check that the manifest is valid and that the remote registry exists, but don't generate a token
+      --registry <REGISTRY>   The name of the registry to log in to
   -h, --help                  Print help
   -V, --version               Print version
 ```
