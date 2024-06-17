@@ -37,9 +37,6 @@ jobs:
           # MacOS hosts
           - target: aarch64-apple-darwin
             os: macos-latest
-          # Windows hosts
-          - target: x86_64-pc-windows-msvc
-            os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout source code
@@ -55,7 +52,7 @@ jobs:
         shell: bash
         run: |
           cp \
-            --verbose \
+            "-v"
             "./target/${{ matrix.target }}/release/cargo-ktra-login"  \
             "cargo-ktra-login-${{ github.ref_name }}-${{ matrix.target }}"
 
